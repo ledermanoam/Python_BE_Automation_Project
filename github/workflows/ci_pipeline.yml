@@ -1,0 +1,42 @@
+name: Pytest API Test Pipeline
+
+on:
+  # Trigger the workflow on pushes and pull requests to the main branch
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  # Allow manual trigger from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  test_trello_api:
+    runs-on: ubuntu-latest
+
+    # Define a matrix to test across multiple Python versions (Good practice)
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Pytest API Tests
+      # Secrets are automatically injected as environment variables by GitHub Actions
+      # The names must match the names defined in the GitHub Repository Secrets
+      env:
+        TRELLO_API_KEY: ${{ secrets.TRELLO_API_KEY }}
+        TRELLO_API_TOKEN: ${{ secrets.TRELLO_API_TOKEN }}
+      run: |
+        pytest -v
