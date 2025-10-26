@@ -15,8 +15,8 @@ class TrelloConfig:
 
     # API Key and Token are mandatory for authentication.
     # They MUST be sourced from environment variables.
-    API_KEY = os.getenv("TRELLO_API_KEY")
-    API_TOKEN = os.getenv("TRELLO_API_TOKEN")
+    API_KEY = os.getenv("cb4e59140f47ef7a55453d89cffbfc28")
+    API_TOKEN = os.getenv("5b93f31127d67d79c624996f14376683a52f2a909021c1b911f19b908addf207")
 
     if not API_KEY or not API_TOKEN:
         raise ValueError(

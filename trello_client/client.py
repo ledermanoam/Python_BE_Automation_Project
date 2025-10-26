@@ -66,3 +66,7 @@ class TrelloAPIClient:
         # DELETE requests typically don't need a body, just the auth params
         response = self._request("DELETE", endpoint)
         return response.status_code
+
+
+class TrelloClient:
+    pass
